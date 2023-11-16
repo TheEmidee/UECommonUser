@@ -2,9 +2,7 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
 #include "CommonUserTypes.h"
-#include "Runtime/Launch/Resources/Version.h"
 #include "Subsystems/GameInstanceSubsystem.h"
 #include "UObject/ObjectPtr.h"
 #include "UObject/StrongObjectPtr.h"
