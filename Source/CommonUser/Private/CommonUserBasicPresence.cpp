@@ -78,6 +78,7 @@ void UCommonUserBasicPresence::OnNotifySessionInformationChanged(ECommonSessionI
 			if(Presence)
 			{
 				FOnlineUserPresenceStatus UpdatedPresence;
+				UpdatedPresence.State = EOnlinePresenceState::Online; // We'll only send the presence update if the user has a valid UniqueNetId, so we can assume they are Online
 				UpdatedPresence.StatusStr = *SessionStateToBackendKey(SessionStatus);
 				UpdatedPresence.Properties.Emplace(PresenceKeyGameMode, GameMode);
 				UpdatedPresence.Properties.Emplace(PresenceKeyMapName, MapNameTruncated);
