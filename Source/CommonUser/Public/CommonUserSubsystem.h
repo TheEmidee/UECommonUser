@@ -93,9 +93,13 @@ public:
 	UFUNCTION(BlueprintCallable, Category = UserInfo)
 	FUniqueNetIdRepl GetNetId(ECommonUserOnlineContext Context = ECommonUserOnlineContext::Game) const;
 
-	/** Returns the user's human readable nickname */
+	/** Returns the user's human readable nickname, this will return the value that was cached during UpdateCachedNetId or SetNickname */
 	UFUNCTION(BlueprintCallable, Category = UserInfo)
-	FString GetNickname() const;
+	FString GetNickname(ECommonUserOnlineContext Context = ECommonUserOnlineContext::Game) const;
+
+	/** Modify the user's human readable nickname, this can be used when setting up multiple guests but will get overwritten with the platform nickname for real users */
+	UFUNCTION(BlueprintCallable, Category = UserInfo)
+	void SetNickname(const FString& NewNickname, ECommonUserOnlineContext Context = ECommonUserOnlineContext::Game);
 
 	/** Returns an internal debug string for this player */
 	UFUNCTION(BlueprintCallable, Category = UserInfo)
@@ -114,6 +118,9 @@ public:
 	{
 		/** Cached net id per system */
 		FUniqueNetIdRepl CachedNetId;
+
+		/** Cached nickanem, updated whenever net ID might change */
+		FString CachedNickname;
 
 		/** Cached values of various user privileges */
 		TMap<ECommonUserPrivilege, ECommonUserPrivilegeResult> CachedPrivileges;
@@ -392,6 +399,9 @@ public:
 
 	/** Returns the unique net id for a local platform user */
 	FUniqueNetIdRepl GetLocalUserNetId(FPlatformUserId PlatformUser, ECommonUserOnlineContext Context = ECommonUserOnlineContext::Game) const;
+
+	/** Returns the nickname for a local platform user, this is cached in common user Info */
+	FString GetLocalUserNickname(FPlatformUserId PlatformUser, ECommonUserOnlineContext Context = ECommonUserOnlineContext::Game) const;
 
 	/** Convert a user id to a debug string */
 	FString PlatformUserIdToString(FPlatformUserId UserId);
